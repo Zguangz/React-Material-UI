@@ -8,7 +8,7 @@ export default function Header() {
     <div>
       <AppBar position="static">
         <Toolbar>
-          <Typography variant="headline" color="inherit">
+          <Typography variant="h6" color="inherit">
             Exercise Database
           </Typography>
         </Toolbar>
