@@ -13,14 +13,23 @@ const styles = {
   }
 }
 
-export default function index({ exercises }) {
+export default ({
+  exercises,
+  category,
+  onSelect,
+  exercise: {
+    id,
+    title = 'Welcome!',
+    description = 'Please select an exercise from the list on the left.'
+  }
+}) => {
   return (
     <Grid container>
       <Grid item sm>
         <Paper style={styles.Paper}>
           {exercises.map(([group, exercises]) => {
-            return (
-              <React.Fragment>
+            return !category || category === group ? (
+              <React.Fragment key={group}>
                 <Typography
                   variant="h6"
                   style={{ textTransform: 'capitalize' }}
@@ -28,24 +37,27 @@ export default function index({ exercises }) {
                   {group}
                 </Typography>
                 <List component="ul">
-                  {exercises.map(({ title }) => {
+                  {exercises.map(({ id, title }) => {
                     return (
-                      <ListItem button>
-                        <ListItemText primary={title} />
+                      <ListItem key={id} button>
+                        <ListItemText
+                          primary={title}
+                          onClick={() => onSelect(id)}
+                        />
                       </ListItem>
                     )
                   })}
                 </List>
               </React.Fragment>
-            )
+            ) : null
           })}
         </Paper>
       </Grid>
       <Grid item sm>
         <Paper style={styles.Paper}>
-          <Typography variant="h5">Welcome!</Typography>
+          <Typography variant="h5">{title}</Typography>
           <Typography variant="body1" style={{ marginTop: 20 }}>
-            Please select an exercise from the list on the left.
+            {description}
           </Typography>
         </Paper>
       </Grid>
